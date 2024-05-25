@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Infra.Services;
-public class ProducerService
+public sealed class ProducerService
 {
     private readonly ILogger<ProducerService> _logger;
     private readonly IConfiguration _configuration;
