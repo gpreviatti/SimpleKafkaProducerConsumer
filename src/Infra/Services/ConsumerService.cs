@@ -30,6 +30,8 @@ public sealed class ConsumerService : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
+        await Task.Yield();
+
         _consumer.Subscribe("my-topic");
 
         while (!cancellationToken.IsCancellationRequested)
@@ -38,11 +40,11 @@ public sealed class ConsumerService : BackgroundService
         _consumer.Close();
     }
 
-    private void ProcessKafkaMessage(CancellationToken stoppingToken)
+    private void ProcessKafkaMessage(CancellationToken cancellationToken)
     {
         try
         {
-            var consumeResult = _consumer.Consume(stoppingToken);
+            var consumeResult = _consumer.Consume(cancellationToken);
 
             var message = consumeResult.Message.Value;
 
